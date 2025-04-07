@@ -1,17 +1,20 @@
 import React from 'react'
-import { Input } from './ui/input'
-// import Image from 'next/image'
+import { ShoppingCart } from 'lucide-react';
+import Link from 'next/link';
+import NavbarSearch from '@/components/NavbarSearch';
 
 export default function Navbar() {
   return (
-    <div className='flex gap-30 items-center justify-between'>
-        <ul className='flex gap-1 space-x-3 '>
-            <li>Home</li>
-            <li>Shop</li>
-            <li>Cart</li>
+    <div className='flex gap-5 items-center justify-between h-20'>
+        <ul className='flex gap-10 space-x-3 pl-25'>
+            <li><Link href={'/'}>Home</Link></li>
+            <li><Link href={'/products'}>Products</Link></li>
+            <li><Link href={'/about'}>About</Link></li>
         </ul>
-        <Input className='w-1/3' type="search" placeholder="Search for product" />
-        {/* <Image src=".." alt="logo" width={50} height={50} />        */}
+        <NavbarSearch/>
+        <Link href={'/cart'} className='pr-25'>
+            <ShoppingCart/>
+        </Link>
     </div>
   )
 }
