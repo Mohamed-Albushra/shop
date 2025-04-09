@@ -22,3 +22,26 @@ export async function getAllProducts() {
     return [];
   }
 }
+
+export async function getCategories() {
+  try {
+    const response = await fetch(BASE_URL+'/category-list');
+    const data = await response.json();
+    return data as string[];
+    
+  } catch (error) {
+    console.error("Error fetching Categories:", error);
+    return [];
+  }
+}
+
+export async function getProductsByCategory(category: string) {
+  try {
+    const response = await fetch(BASE_URL+'/category/'+category);
+    const data = await response.json();
+    return data.products as Product[];
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+}
