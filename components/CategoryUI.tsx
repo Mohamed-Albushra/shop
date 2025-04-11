@@ -133,7 +133,7 @@ function CategoryUI(props: CategoryUIProps) {
                     className={`flex items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${isOpen ? "space-x-3" : "justify-center"
                       }`}
                   >
-                    <ArrowUpDown />
+                    <ArrowUpDown size={20} />
                     {isOpen && (
                       <div>
                         <h4 className=" mb-3 pl-10">Sorting By</h4>
@@ -164,7 +164,7 @@ function CategoryUI(props: CategoryUIProps) {
                     className={`items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${isOpen ? "space-x-3" : "justify-center"
                       }`}
                   >
-                    <DollarSign />
+                    <DollarSign size={20} />
                     {isOpen && (
                       <div>
                         <h4 className="mb-6 pl-12">Price Range</h4>
