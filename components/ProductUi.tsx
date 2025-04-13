@@ -1,8 +1,10 @@
 "use client";
 import { Product } from '@/lib/interfaces'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { RatingStars } from './RatingStars';
+import Link from 'next/link';
+import { getProductsByBrand, getProductsByTag } from '@/lib/actions';
 
 type ProductUiProps = {
   product: Product
@@ -10,10 +12,45 @@ type ProductUiProps = {
 function ProductUi({ product }: ProductUiProps) {
 
   const [photo, setPhoto] = useState(product?.images[0]);
-
+  const [relatedByBrandProducts, setRelatedByBrandProducts] = useState<Product[]>([]);
+  const [brandScrollIndex, setBrandScrollIndex] = useState(0);
+  const [tagScrollIndex, setTagScrollIndex] = useState(0);
+  const [relatedByTagProducts, setRelatedByTagProducts] = useState<Product[]>([]);
   const changeImage = (image: string) => {
     setPhoto(image);
   }
+
+  const relatedByBrand = useCallback(
+    async (product: Product) => {
+      const products = await getProductsByBrand(product.brand);
+      setRelatedByBrandProducts(products);
+      return relatedByBrandProducts;
+    },
+    [relatedByBrandProducts]
+  );
+
+  const relatedByTages = useCallback(
+    async (product: Product, tagsProducts: Product[]) => {
+      await Promise.all(
+        product.tags.map(async (tag) => {
+          const products = await getProductsByTag(tag);
+          tagsProducts.push(...products);
+        })
+      );
+      setRelatedByTagProducts(tagsProducts.flat());
+    },
+    [setRelatedByTagProducts]
+  );
+
+  const ITEMS_PER_VIEW = 5;
+  const getVisibleItems = (items: Product[], startIndex: number) => items.slice(startIndex, startIndex + ITEMS_PER_VIEW);
+
+  useEffect(() => {
+    relatedByBrand(product);
+    relatedByTages(product, []);
+  }, [product, relatedByBrand, relatedByTages]);
+
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 mx-50 py-30">
       {/*Images section*/}
@@ -34,8 +71,8 @@ function ProductUi({ product }: ProductUiProps) {
         <div>
           <Image src={photo}
             alt={product.title}
-            width={400}
-            height={400}
+            width={800}
+            height={800}
             className="mx-auto" />
         </div>
       </div>
@@ -54,15 +91,139 @@ function ProductUi({ product }: ProductUiProps) {
       </div>
       {/* CART SECTION */}
       <div className="lg:col-span-3 border rounded p-4 space-y-4 shadow-sm">
-        <h1>{product.price}</h1>
-        <h3>Discount: {product.discountPercentage}%</h3>
+        <h1 className="text-3xl font-bold">{product.price} SEK</h1>
+        <h3 className="text-lg text-gray-600">Discount: {product.discountPercentage}%</h3>
         <div className="flex flex-col space-y-4">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to cart</button>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buy now</button>
         </div>
+        <div className="text-sm text-gray-600">
+          <p><span className="font-semibold">Shipping Information:</span> {product.shippingInformation}</p>
+          <p><span className="font-semibold">Availability:</span> {product.availabilityStatus}</p>
+          <p><span className="font-semibold">Return Policy:</span> {product.returnPolicy}</p>
+          <p><span className="font-semibold">Minimum Order Quantity:</span> {product.minimumOrderQuantity}</p>
+          <Image
+            src={product.meta.qrCode}
+            alt={product.title}
+            width={200}
+            height={200}
+            className="mx-auto"/>
+        </div>
       </div>
-    </div>
-  )
+
+
+      {/* RELATED PRODUCTS SECTION */}
+      <div className="lg:col-span-12 mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8">
+        {/* RELATED PRODUCTS WITH THE SAME BRAND SECTION */}
+        <div className="border rounded p-4 justify-items-center">
+            <h2 className="text-xl font-semibold mb-4">More from this Brand</h2>
+            <div className="relative mx-50">
+              <div className="flex items-center">
+                <button
+                onClick={() => setBrandScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
+                >
+                  ◀
+                </button>
+                <div className="grid grid-cols-5 gap-4 flex-1">
+                  {getVisibleItems(relatedByBrandProducts, brandScrollIndex).map((product, index) => (
+                  <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
+                    <Link href={`/products/${product.id}`}>
+                      <Image
+                        src={product.thumbnail}
+                        alt={product.title}
+                        width={80}
+                        height={80}
+                        className="rounded w-full aspect-square object-contain"
+                      />
+                      <p className="mt-2 text-sm font-medium">{product.title}</p>
+                      <p className="text-sm text-gray-600">{product.price} SEK</p>
+                    </Link>
+                  </div>
+              ))}
+                </div>
+                <button
+                onClick={() => setBrandScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+        </div>
+        {/* RELATED PRODUCTS WITH THE SAME TAGS SECTION */}
+        {/* <div className="border rounded p-4 justify-items-center">
+            <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
+            <div className="relative mx-50">
+              <div className="flex items-center">
+                <button
+                onClick={() => setTagScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2 cursor-pointer">
+                  ↤
+                </button>
+                <div className="grid grid-cols-5 gap-4 flex-1">
+                  {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
+                  <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
+                  <Link href={`/products/${product.id}`}>
+                    <Image
+                      src={product.thumbnail}
+                      alt={product.title}
+                      width={80}
+                      height={80}
+                      className="rounded w-full aspect-square object-contain"
+                    />
+                    <p className="mt-2 text-sm font-medium">{product.title}</p>
+                    <p className="text-sm text-gray-600">{product.price} SEK</p>
+                  </Link>
+                </div>
+              ))}
+                </div>
+                <button
+                onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByTagProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2 cursor-pointer">
+                  ↦
+                </button>
+            </div>
+          </div>
+        </div> */}
+                <div className="border rounded p-4 justify-items-center">
+            <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
+            <div className="relative mx-50">
+              <div className="flex items-center">
+                <button
+                onClick={() => setTagScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
+                >
+                  ◀
+                </button>
+                <div className="grid grid-cols-5 gap-4 flex-1">
+                  {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
+                  <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
+                    <Link href={`/products/${product.id}`}>
+                      <Image
+                        src={product.thumbnail}
+                        alt={product.title}
+                        width={100}
+                        height={100}
+                        className="rounded w-full aspect-square object-contain"
+                      />
+                      <p className="mt-2 text-sm font-medium">{product.title}</p>
+                      <p className="text-sm text-gray-600">{product.price} SEK</p>
+                    </Link>
+                  </div>
+              ))}
+                </div>
+                <button
+                onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+        </div>
+      </div>
+      {/* REVIEWS */}
+    
+               
+      </div>
+  );
 }
 
 export default ProductUi
+
+

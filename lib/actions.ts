@@ -51,10 +51,35 @@ export async function getProductById(id: number) {
   try {
     const response = await fetch(BASE_URL + "/" + id);
     const data = await response.json();
-    console.log(data);
     return data as Product;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;
+  }
+}
+
+export async function getProductsByBrand(brand: string) {
+  try {
+    const response = await fetch(BASE_URL + "?limit=0");
+    const data = await response.json();
+    const products = data.products as Product[];
+    const filteredProducts = products.filter(product => product.brand === brand);
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+} 
+
+export async function getProductsByTag(tag: string) {
+  try {
+    const response = await fetch(BASE_URL + "?limit=0");
+    const data = await response.json();
+    const products = data.products as Product[];
+    const filteredProducts = products.filter(product => product.tags.includes(tag));
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
   }
 }
