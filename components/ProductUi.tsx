@@ -114,6 +114,7 @@ function ProductUi({ product }: ProductUiProps) {
 
       {/* RELATED PRODUCTS SECTION */}
       <div className="lg:col-span-12 mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8">
+
         {/* RELATED PRODUCTS WITH THE SAME BRAND SECTION */}
         <div className="border rounded p-4 justify-items-center">
             <h2 className="text-xl font-semibold mb-4">More from this Brand</h2>
@@ -150,39 +151,8 @@ function ProductUi({ product }: ProductUiProps) {
             </div>
         </div>
         {/* RELATED PRODUCTS WITH THE SAME TAGS SECTION */}
-        {/* <div className="border rounded p-4 justify-items-center">
-            <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
-            <div className="relative mx-50">
-              <div className="flex items-center">
-                <button
-                onClick={() => setTagScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2 cursor-pointer">
-                  ↤
-                </button>
-                <div className="grid grid-cols-5 gap-4 flex-1">
-                  {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
-                  <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
-                  <Link href={`/products/${product.id}`}>
-                    <Image
-                      src={product.thumbnail}
-                      alt={product.title}
-                      width={80}
-                      height={80}
-                      className="rounded w-full aspect-square object-contain"
-                    />
-                    <p className="mt-2 text-sm font-medium">{product.title}</p>
-                    <p className="text-sm text-gray-600">{product.price} SEK</p>
-                  </Link>
-                </div>
-              ))}
-                </div>
-                <button
-                onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByTagProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2 cursor-pointer">
-                  ↦
-                </button>
-            </div>
-          </div>
-        </div> */}
-                <div className="border rounded p-4 justify-items-center">
+        
+          <div className="border rounded p-4 justify-items-center">
             <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
             <div className="relative mx-50">
               <div className="flex items-center">
@@ -206,7 +176,7 @@ function ProductUi({ product }: ProductUiProps) {
                       <p className="text-sm text-gray-600">{product.price} SEK</p>
                     </Link>
                   </div>
-              ))}
+                    ))}
                 </div>
                 <button
                 onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
@@ -215,12 +185,23 @@ function ProductUi({ product }: ProductUiProps) {
                 </button>
               </div>
             </div>
+          </div>
         </div>
-      </div>
+
       {/* REVIEWS */}
-    
-               
-      </div>
+      <div className="lg:col-span-12 mt-8">
+        <h2 className="text-xl font-semibold mb-4 text-center ">Customer Reviews</h2>
+        {product.reviews.map((review, index) => (
+          <div key={index} className="border p-4 rounded mb-2">
+            <RatingStars rating={review.rating} />
+            <p className="font-medium">{review.reviewerName}</p>
+            <h4>{review.reviewerEmail}</h4>
+            <p className="text-sm text-gray-600">{review.comment}</p>
+            <p className="text-sm text-gray-600">{new Date(review.date).toString()}</p>
+          </div>
+        ))}
+      </div>        
+    </div>
   );
 }
 
