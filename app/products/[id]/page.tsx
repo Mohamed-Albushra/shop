@@ -1,3 +1,4 @@
+import ProductUi from '@/components/ProductUi';
 import { getProductById } from '@/lib/actions';
 import React from 'react'
 
@@ -10,7 +11,7 @@ export default async function product({ params }: { params: Promise<{ id: number
       return <div>Product not found</div>;
     }else{
         return (
-    <div className='text-3xl'>{product.title}</div>
+    <ProductUi product={product} />
   ) 
     }
  
