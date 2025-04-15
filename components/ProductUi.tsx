@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { RatingStars } from './RatingStars';
 import Link from 'next/link';
 import { getProductsByBrand, getProductsByTag } from '@/lib/actions';
+import { useCart } from './cartProvider';
 
 type ProductUiProps = {
   product: Product
@@ -26,7 +27,7 @@ function ProductUi({ product }: ProductUiProps) {
       setRelatedByBrandProducts(products);
       return relatedByBrandProducts;
     },
-    [relatedByBrandProducts]
+    []
   );
 
   const relatedByTages = useCallback(
@@ -39,7 +40,7 @@ function ProductUi({ product }: ProductUiProps) {
       );
       setRelatedByTagProducts(tagsProducts.flat());
     },
-    [setRelatedByTagProducts]
+    []
   );
 
   const ITEMS_PER_VIEW = 5;
@@ -50,12 +51,17 @@ function ProductUi({ product }: ProductUiProps) {
     relatedByTages(product, []);
   }, [product, relatedByBrand, relatedByTages]);
 
+  const { addToCart } = useCart();
+  const addProductToCart = (product: Product) => {
+    addToCart(product);
+  }
+
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 mx-50 py-30">
       {/*Images section*/}
       <div className="lg:col-span-5 flex gap-4">
-      <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-2">
           {product.images.map((image, index) => (
             <li key={index}>
               <Image
@@ -64,10 +70,10 @@ function ProductUi({ product }: ProductUiProps) {
                 alt={product.title}
                 width={80}
                 height={80}
-                className={`cursor-pointer rounded border ${image === photo ? "border-gray-800" : "border-gray-300"}`}/>
+                className={`cursor-pointer rounded border ${image === photo ? "border-gray-800" : "border-gray-300"}`} />
             </li>
           ))}
-        </ul>  
+        </ul>
         <div>
           <Image src={photo}
             alt={product.title}
@@ -94,8 +100,13 @@ function ProductUi({ product }: ProductUiProps) {
         <h1 className="text-3xl font-bold">{product.price} SEK</h1>
         <h3 className="text-lg text-gray-600">Discount: {product.discountPercentage}%</h3>
         <div className="flex flex-col space-y-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to cart</button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buy now</button>
+          <button
+            onClick={() => addProductToCart(product)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to cart</button>
+
+          <button
+            onClick={() => addProductToCart(product)}
+            className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"> <Link href={'/cart'}>Buy now</Link></button>
         </div>
         <div className="text-sm text-gray-600">
           <p><span className="font-semibold">Shipping Information:</span> {product.shippingInformation}</p>
@@ -107,7 +118,7 @@ function ProductUi({ product }: ProductUiProps) {
             alt={product.title}
             width={200}
             height={200}
-            className="mx-auto"/>
+            className="mx-auto" />
         </div>
       </div>
 
@@ -117,16 +128,16 @@ function ProductUi({ product }: ProductUiProps) {
 
         {/* RELATED PRODUCTS WITH THE SAME BRAND SECTION */}
         <div className="border rounded p-4 justify-items-center">
-            <h2 className="text-xl font-semibold mb-4">More from this Brand</h2>
-            <div className="relative mx-50">
-              <div className="flex items-center">
-                <button
-                onClick={() => setBrandScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
-                >
-                  ◀
-                </button>
-                <div className="grid grid-cols-5 gap-4 flex-1">
-                  {getVisibleItems(relatedByBrandProducts, brandScrollIndex).map((product, index) => (
+          <h2 className="text-xl font-semibold mb-4">More from this Brand</h2>
+          <div className="relative mx-50">
+            <div className="flex items-center">
+              <button
+                onClick={() => setBrandScrollIndex((prev) => Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
+              >
+                ◀
+              </button>
+              <div className="grid grid-cols-5 gap-4 flex-1">
+                {getVisibleItems(relatedByBrandProducts, brandScrollIndex).map((product, index) => (
                   <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
                     <Link href={`/products/${product.id}`}>
                       <Image
@@ -140,29 +151,29 @@ function ProductUi({ product }: ProductUiProps) {
                       <p className="text-sm text-gray-600">{product.price} SEK</p>
                     </Link>
                   </div>
-              ))}
-                </div>
-                <button
-                onClick={() => setBrandScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
-                >
-                  ▶
-                </button>
+                ))}
               </div>
+              <button
+                onClick={() => setBrandScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
+              >
+                ▶
+              </button>
             </div>
+          </div>
         </div>
         {/* RELATED PRODUCTS WITH THE SAME TAGS SECTION */}
-        
-          <div className="border rounded p-4 justify-items-center">
-            <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
-            <div className="relative mx-50">
-              <div className="flex items-center">
-                <button
-                onClick={() => setTagScrollIndex((prev) =>Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
-                >
-                  ◀
-                </button>
-                <div className="grid grid-cols-5 gap-4 flex-1">
-                  {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
+
+        <div className="border rounded p-4 justify-items-center">
+          <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
+          <div className="relative mx-50">
+            <div className="flex items-center">
+              <button
+                onClick={() => setTagScrollIndex((prev) => Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
+              >
+                ◀
+              </button>
+              <div className="grid grid-cols-5 gap-4 flex-1">
+                {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
                   <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
                     <Link href={`/products/${product.id}`}>
                       <Image
@@ -176,17 +187,17 @@ function ProductUi({ product }: ProductUiProps) {
                       <p className="text-sm text-gray-600">{product.price} SEK</p>
                     </Link>
                   </div>
-                    ))}
-                </div>
-                <button
-                onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
-                >
-                  ▶
-                </button>
+                ))}
               </div>
+              <button
+                onClick={() => setTagScrollIndex((prev) => prev + ITEMS_PER_VIEW < relatedByBrandProducts.length ? prev + ITEMS_PER_VIEW : prev)} className="p-2"
+              >
+                ▶
+              </button>
             </div>
           </div>
         </div>
+      </div>
 
       {/* REVIEWS */}
       <div className="lg:col-span-12 mt-8">
@@ -200,7 +211,7 @@ function ProductUi({ product }: ProductUiProps) {
             <p className="text-sm text-gray-600">{new Date(review.date).toString()}</p>
           </div>
         ))}
-      </div>        
+      </div>
     </div>
   );
 }
