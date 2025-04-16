@@ -218,15 +218,15 @@ function CategoryUI(props: CategoryUIProps) {
             {category}
           </h1>
 
-          <ul className=" flex-1 grid grid-flow-row auto-rows-max md:auto-rows-min grid-cols-3 justify-center gap-5 w-5xl mx-auto mt-5 ">
-            {localProducts.map((product, index) => (
-              <li key={index}>
-                <Link href={`/products/${product.id}`}>
-                  <ProductCard key={product.id} product={product} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <ul className="flex-1 grid grid-flow-row auto-rows-max md:auto-rows-min lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center gap-5 lg:max-w-5xl md:max-w-3xl sm:max-w-sm mx-auto mt-5">
+  {localProducts.map((product, index) => (
+    <li key={index} className="overflow-hidden rounded-lg shadow-md">
+      <Link href={`/products/${product.id}`}>
+        <ProductCard key={product.id} product={product} />
+      </Link>
+    </li>
+  ))}
+</ul>
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ export default function Navbar() {
         </div>
         <div>
           <Link href="/cart" className="relative flex items-center">
-            <span className="absolute -top-2 -right-2 bg-neutral-800 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            <span className="absolute -top-5 -right-1 bg-neutral-800 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-90">
               {cartCount}
             </span>
             <ShoppingCart size={24} />
