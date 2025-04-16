@@ -1,8 +1,9 @@
+import CartUI from '@/components/CartUI'
 import React from 'react'
 
 function cart() {
   return (
-    <div>cart</div>
+    <CartUI />
   )
 }
 

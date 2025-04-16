@@ -47,7 +47,6 @@ export async function getProductsByCategory(category: string) {
 }
 
 export async function getProductById(id: number) {
-  console.log(id);
   try {
     const response = await fetch(BASE_URL + "/" + id);
     const data = await response.json();
