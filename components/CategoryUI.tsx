@@ -27,7 +27,7 @@ const manolo = localFont({ src: "../assets/manolo-mono.ttf" });
 
 function CategoryUI(props: CategoryUIProps) {
   const { category, products } = props;
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [localProducts, setLocalProducts] = useState<Product[]>(products);
   const [sortingBy, setSortingBy] = useState<string>("rating");
 

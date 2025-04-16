@@ -1,29 +1,31 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, {/*{ useEffect, useState } */}from 'react'
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import NavbarSearch from '@/components/NavbarSearch';
 import { useCart } from './cartProvider';
-interface CartItem {
-  id: number;
-  quantity: number;
-}
+// interface CartItem {
+//   id: number;
+//   quantity: number;
+// }
 export default function Navbar() {
-  const [cartCount, setCartCount] = useState(0);
-  const { cartCount: cartCountFromHook } = useCart();
+  // const [cartCount, setCartCount] = useState(0);
+  // const { cartCount: cartCountFromHook } = useCart();
 
-  useEffect(() => {
-    const cart: CartItem[] = getCart();
-    if (cart.length !== 0) {
-      const totalQuantity = cart.reduce((acc: number, item: { quantity: number; }) => acc + item.quantity, 0);
-      setCartCount(totalQuantity);
-    }
-  }, [cartCountFromHook]);
+  // useEffect(() => {
+  //   const cart: CartItem[] = getCart();
+  //   if (cart.length !== 0) {
+  //     const totalQuantity = cart.reduce((acc: number, item: { quantity: number; }) => acc + item.quantity, 0);
+  //     setCartCount(totalQuantity);
+  //   }
+  // }, [cartCountFromHook]);
 
-  const getCart = () => {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
-  }
+//   const getCart = () => {
+//     const cart = localStorage.getItem('cart');
+//     return cart ? JSON.parse(cart) : [];
+//   }
+//  const cartCount = getCart().length;
+  const { cartCount } = useCart();
   
   return (
     <div className='flex gap-5 items-center justify-between h-20'>

@@ -74,7 +74,7 @@ function ProductUi({ product }: ProductUiProps) {
             </li>
           ))}
         </ul>
-        <div>
+        <div >
           <Image src={photo}
             alt={product.title}
             width={800}
@@ -102,11 +102,11 @@ function ProductUi({ product }: ProductUiProps) {
         <div className="flex flex-col space-y-4">
           <button
             onClick={() => addProductToCart(product)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to cart</button>
-
+            className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer">Add to cart</button>
+          
           <button
             onClick={() => addProductToCart(product)}
-            className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"> <Link href={'/cart'}>Buy now</Link></button>
+            className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"> <Link href={'/cart'}>Buy now</Link></button>
         </div>
         <div className="text-sm text-gray-600">
           <p><span className="font-semibold">Shipping Information:</span> {product.shippingInformation}</p>

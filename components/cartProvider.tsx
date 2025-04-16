@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { Product } from "@/lib/interfaces";
 
 interface CartItem {
@@ -24,7 +24,18 @@ export const CartContext = createContext<CartContextType | undefined>(
 );
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const storedCart = typeof localStorage !== 'undefined' ? localStorage.getItem("cart") : null;
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  useEffect(() => {
+    const cart = localStorage.getItem("cart");
+    if (cart) {
+      const cartProducts = JSON.parse(cart);
+      setCartItems(cartProducts);
+    }
+  }, []);
 
   const addToCart = (product: Product) => {
     const cart = localStorage.getItem("cart");
@@ -37,69 +48,61 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } else {
       cartProducts = [];
     }
-    if (cartProducts.some((item) => item.id === product.id)) {
+    if (cartProducts.some((item) => item.product.id === product.id)) {
       cartProducts = cartProducts.map((item) => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity + 1 };
+        if (item.product.id === product.id) {
+          return { product, quantity: item.quantity + 1 };
         }
         return item;
       });
     } else {
-      cartProducts.push({ ...product, quantity: 1 });
+      cartProducts.push({ product, quantity: 1 });
     }
     localStorage.setItem("cart", JSON.stringify(cartProducts));
-
-    setCartItems((prevCart) => {
-      const existingItem = prevCart.find(
-        (item) => item.product.id === product.id
-      );
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { product, quantity: 1 }];
-      }
-    });
+    setCartItems(cartProducts);
   };
 
   const removeFromCart = (product: Product) => {
-    setCartItems((prevCart) =>
-      prevCart.filter((item) => item.product.id !== product.id)
-    );
+    const newCartItems = cartItems.filter((item) => item.product.id !== product.id);
+    setCartItems(newCartItems);
+    localStorage.setItem("cart", JSON.stringify(newCartItems));
   };
 
   const clearCart = () => {
     setCartItems([]);
+    localStorage.removeItem("cart");
+    setCartCount(0);
   };
 
   const moreQuantity = (productId: number) => {
-    setCartItems((prevCart) =>
-      prevCart.map((item) =>
-        item.product.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
+    const updatedCartItems = cartItems.map((item: CartItem) =>
+      item.product.id === productId
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
     );
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    setCartItems(updatedCartItems);
   };
-
+  
   const lessQuantity = (productId: number) => {
-    setCartItems((prevCart) =>
-      prevCart.map((item) =>
-        item.product.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+    const updatedCartItems = cartItems.map((item: CartItem) =>
+      item.product.id === productId && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
     );
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    setCartItems(updatedCartItems);
   };
 
   const cartTotal = cartItems.reduce(
-    (total, item) => total + item.product.price * item.quantity,
+    (total, item) => total + (item.product?.price || 0) * item.quantity,
     0
   );
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const [cartCount, setCartCount] = useState(0);
+
+useEffect(() => {
+  setCartCount(cartItems.reduce((total, item) => total + item.quantity, 0));
+}, [cartItems]);
 
   return (
     <CartContext.Provider
