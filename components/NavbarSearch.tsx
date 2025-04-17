@@ -1,4 +1,3 @@
-// import { Input } from "../components/ui/input";
 import { AlertCircle, Search } from "lucide-react";
 
 import { getSearchedProducts } from "@/lib/actions";
@@ -7,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-// import Form from "next/form";
 export default function NavbarSearch() {
   const [query, setQuery] = useState("");
   const router = useRouter();
@@ -22,7 +20,7 @@ export default function NavbarSearch() {
     async (query: string) => {
       setLoading(true);
       setError("");
-      setSearchPerformed(true); // Update searchPerformed to true when search is performed
+      setSearchPerformed(true);
 
       getSearchedProducts(queryParam || query)
         .then((data) => setResults(data))
@@ -44,20 +42,7 @@ export default function NavbarSearch() {
     setQuery(query);
   };
   return (
-    // <Form
-    //   action="/search "
-    //   className="relative flex gap-5 items-center justify-between h-20 px-25"
-    // >
-    //   {/* On submission, the input value will be appended to the URL, e.g. /search?query=abc */}
-    //   <Search className="absolute right-135 top-10 h-4 w-4 text-muted-foreground -translate-y-1/2" />
-    //   <Input
-    //     name="query"
-    //     className="w-100 pl-10"
-    //     type="search"
-    //     placeholder="Search for product"
-    //   />
-    //   <button type="submit">Submit</button>
-    // </Form>
+
 <div className="flex flex-col items-center">
   <section className="flex justify-between items-center">
     <div className="hidden lg:flex">
@@ -84,6 +69,7 @@ export default function NavbarSearch() {
               className="flex-1 border p-2 rounded theme-placeholder-neutral-colored theme-border-text-colored theme-text-colored"
               type="text"
               placeholder="Search for..."
+              aria-label="Search for..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -130,6 +116,7 @@ export default function NavbarSearch() {
               className="flex-1 border p-2 rounded theme-placeholder-neutral-colored theme-border-text-colored theme-text-colored"
               type="text"
               placeholder="Search for..."
+              aria-label="Search for..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />

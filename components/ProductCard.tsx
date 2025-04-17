@@ -13,7 +13,8 @@ export default function ProductCard({ product }: { product: Product }) {
         height={200}
         className="mx-auto"
       />
-      <h2>{product.price} SEK</h2>
+      <div className="px-10 md:px-0 lg:px-0">
+        <h2>{product.price} SEK</h2>
       <h2>Discount: {product.discountPercentage}%</h2>
       <h2>{product.title}</h2>
       <div className="flex items-center space-x-2">
@@ -21,6 +22,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <span className="text-sm text-gray-600">
           {product.rating.toFixed(1)}
         </span>
+      </div>
       </div>
     </div>
   );

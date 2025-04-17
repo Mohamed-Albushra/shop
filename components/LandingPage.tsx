@@ -15,7 +15,7 @@ export default function LandingPage() {
       <div>
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mx-auto max-w-[800px] text-center">
+            <div className="mx-auto max-w-[800px] text-center px-3 md:px-0">
               <div className={necosmic.className} >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   Welcome to ShopSmart <br /> <span className={manolo.className}> Your Everyday Shopping Companion </span>
