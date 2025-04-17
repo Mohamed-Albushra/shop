@@ -100,8 +100,9 @@ function CategoryUI(props: CategoryUIProps) {
       <div className="relative z-10">
         <div className="fixed top-15 left-0 z-40">
           <div
-            className={`flex flex-col h-screen  bg-white/70 text-black transition-all duration-300 ease-in-out ${isOpen ? "w-64" : "w-16"
-              }`}
+            className={`flex flex-col h-screen  bg-white/70 text-black transition-all duration-300 ease-in-out ${
+              isOpen ? "w-64" : "w-16"
+            }`}
           >
             {/* Sidebar Header */}
             <div className="flex items-center justify-between p-5 border-b border-gray-700">
@@ -130,8 +131,9 @@ function CategoryUI(props: CategoryUIProps) {
               <ul className="space-y-2">
                 <li>
                   <div
-                    className={`flex items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${isOpen ? "space-x-3" : "justify-center"
-                      }`}
+                    className={`flex items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${
+                      isOpen ? "space-x-3" : "justify-center"
+                    }`}
                   >
                     <ArrowUpDown size={20} />
                     {isOpen && (
@@ -161,8 +163,9 @@ function CategoryUI(props: CategoryUIProps) {
                 </li>
                 <li className="mt-10">
                   <div
-                    className={`items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${isOpen ? "space-x-3" : "justify-center"
-                      }`}
+                    className={`items-center p-2 rounded-md hover:bg-gray-200 transition-colors duration-200 ${
+                      isOpen ? "space-x-3" : "justify-center"
+                    }`}
                   >
                     <DollarSign size={20} />
                     {isOpen && (
@@ -218,9 +221,9 @@ function CategoryUI(props: CategoryUIProps) {
             {category}
           </h1>
 
-          <ul className=" flex-1 grid grid-flow-row auto-rows-max md:auto-rows-min grid-cols-3 justify-center gap-5 w-5xl mx-auto mt-5 ">
+          <ul className="flex-1 grid grid-flow-row auto-rows-max md:auto-rows-min lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center gap-5 lg:max-w-5xl md:max-w-3xl mx-auto mt-5">
             {localProducts.map((product, index) => (
-              <li key={index}>
+              <li key={index} className="overflow-hidden rounded-lg shadow-md">
                 <Link href={`/products/${product.id}`}>
                   <ProductCard key={product.id} product={product} />
                 </Link>

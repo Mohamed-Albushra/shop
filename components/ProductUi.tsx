@@ -17,6 +17,13 @@ function ProductUi({ product }: ProductUiProps) {
   const [brandScrollIndex, setBrandScrollIndex] = useState(0);
   const [tagScrollIndex, setTagScrollIndex] = useState(0);
   const [relatedByTagProducts, setRelatedByTagProducts] = useState<Product[]>([]);
+  const [isClientSide, setIsClientSide] = useState(false);
+
+  useEffect(() => {
+    setIsClientSide(true);
+  }, []);
+
+ 
   const changeImage = (image: string) => {
     setPhoto(image);
   }
@@ -43,7 +50,8 @@ function ProductUi({ product }: ProductUiProps) {
     []
   );
 
-  const ITEMS_PER_VIEW = 5;
+
+  const ITEMS_PER_VIEW = 4;
   const getVisibleItems = (items: Product[], startIndex: number) => items.slice(startIndex, startIndex + ITEMS_PER_VIEW);
 
   useEffect(() => {
@@ -55,12 +63,14 @@ function ProductUi({ product }: ProductUiProps) {
   const addProductToCart = (product: Product) => {
     addToCart(product);
   }
-
+  if (!isClientSide) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 mx-50 py-30">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4 mx-10 md:mx-20 lg:mx-35 py-30">
       {/*Images section*/}
-      <div className="lg:col-span-5 flex gap-4">
+      <div className="md:col-span-1 lg:col-span-5 flex gap-4">
         <ul className="flex flex-col gap-2">
           {product.images.map((image, index) => (
             <li key={index}>
@@ -83,7 +93,7 @@ function ProductUi({ product }: ProductUiProps) {
         </div>
       </div>
       {/* PRODUCT INFO SECTION */}
-      <div className="lg:col-span-4 flex flex-col space-y-4">
+      <div className="lg:col-span-4 md:col-span-1 flex flex-col space-y-4">
         <h1 className="text-3xl font-bold">{product.title}</h1>
         <h3 className="text-lg text-gray-600">{product.brand}</h3>
         <div className="text-xl text-gray-800">
@@ -96,7 +106,7 @@ function ProductUi({ product }: ProductUiProps) {
         </div>
       </div>
       {/* CART SECTION */}
-      <div className="lg:col-span-3 border rounded p-4 space-y-4 shadow-sm">
+      <div className="md:col-span-2 lg:col-span-3 border rounded p-4 space-y-4 shadow-sm">
         <h1 className="text-3xl font-bold">{product.price} SEK</h1>
         <h3 className="text-lg text-gray-600">Discount: {product.discountPercentage}%</h3>
         <div className="flex flex-col space-y-4">
@@ -124,19 +134,18 @@ function ProductUi({ product }: ProductUiProps) {
 
 
       {/* RELATED PRODUCTS SECTION */}
-      <div className="lg:col-span-12 mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8">
-
+      <div className="lg:col-span-12 md:col-span-2 col-span-1 mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8">
         {/* RELATED PRODUCTS WITH THE SAME BRAND SECTION */}
         <div className="border rounded p-4 justify-items-center">
           <h2 className="text-xl font-semibold mb-4">More from this Brand</h2>
-          <div className="relative mx-50">
+          <div className="relative mx-0 md:mx-20">
             <div className="flex items-center">
               <button
                 onClick={() => setBrandScrollIndex((prev) => Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
               >
                 ◀
               </button>
-              <div className="grid grid-cols-5 gap-4 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-1">
                 {getVisibleItems(relatedByBrandProducts, brandScrollIndex).map((product, index) => (
                   <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
                     <Link href={`/products/${product.id}`}>
@@ -163,16 +172,16 @@ function ProductUi({ product }: ProductUiProps) {
         </div>
         {/* RELATED PRODUCTS WITH THE SAME TAGS SECTION */}
 
-        <div className="border rounded p-4 justify-items-center">
+        <div className="md:col-span-2 border rounded p-4 justify-items-center">
           <h2 className="text-xl font-semibold mb-4">More from this by Tags</h2>
-          <div className="relative mx-50">
+          <div className="relative mx-0 md:mx-20">
             <div className="flex items-center">
               <button
                 onClick={() => setTagScrollIndex((prev) => Math.max(prev - ITEMS_PER_VIEW, 0))} className="p-2"
               >
                 ◀
               </button>
-              <div className="grid grid-cols-5 gap-4 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-1">
                 {getVisibleItems(relatedByTagProducts, tagScrollIndex).map((product, index) => (
                   <div key={index} className="border rounded p-2 field-sizing-content hover:scale-105 transition-transform">
                     <Link href={`/products/${product.id}`}>
@@ -200,7 +209,7 @@ function ProductUi({ product }: ProductUiProps) {
       </div>
 
       {/* REVIEWS */}
-      <div className="lg:col-span-12 mt-8">
+      <div className="md:col-span-2 lg:col-span-12 mt-8">
         <h2 className="text-xl font-semibold mb-4 text-center ">Customer Reviews</h2>
         {product.reviews.map((review, index) => (
           <div key={index} className="border p-4 rounded mb-2">

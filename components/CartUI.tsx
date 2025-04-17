@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-
-
+import localFont from "next/font/local";
+const manolo = localFont({ src: "../assets/manolo-mono.ttf"});
 function CartUI() {
   const {
     cartItems,
@@ -23,11 +23,13 @@ function CartUI() {
     cartTotal,
     cartCount,
   } = useCart();
+ 
 
   return (
-    <div className="mx-auto">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-2 border rounded-2xl mx-5 ">
+    <div className="mx-auto py-5 md:py-10 sm:px-10 md:px-5 lg:px-32">
+      <h1 className={`${manolo.className} flex justify-center items-center text-3xl text-black pb-3 backdrop-opacity-10 px-4  rounded`}>Your Cart</h1>
+      <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-10 md:gap-5">
+        <div className="col-span-2 border rounded-2xl mx-1 ">
           <Table>
             <TableHeader>
               <TableRow className="text-lg font-bold">
@@ -37,7 +39,9 @@ function CartUI() {
                   Quantity
                 </TableHead>
                 <TableHead className="w-[100px] text-center">Price</TableHead>
-                <TableHead className="w-[100px] text-center">Total</TableHead>
+                <TableHead className="w-[100px] text-center hidden md:table-cell">
+                  Total
+                </TableHead>
                 <TableHead className="w-[100px] text-center">Remove</TableHead>
               </TableRow>
             </TableHeader>
@@ -55,10 +59,8 @@ function CartUI() {
                     </Link>
                   </TableCell>
 
-                  <TableCell className="font-medium  text-center">
-                    <Link
-                      href={`/products/${item.product.id}`}
-                    >
+                  <TableCell className="font-medium text-center max-w-[80px] truncate whitespace-nowrap overflow-hidden">
+                    <Link href={`/products/${item.product.id}`}>
                       {item.product.title}
                     </Link>
                   </TableCell>
@@ -66,14 +68,14 @@ function CartUI() {
                   <TableCell className="font-medium  text-center">
                     <button
                       onClick={() => moreQuantity(item.product.id)}
-                      className="rounded-sm bg-primary px-4 py-2 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer"
+                      className="rounded-sm bg-primary px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-3 lg:px-4 lg:py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer"
                     >
                       +
                     </button>
                     <span className="mx-2">{item.quantity}</span>
                     <button
                       onClick={() => lessQuantity(item.product.id)}
-                      className="rounded-sm bg-primary px-4 py-2 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer"
+                      className="rounded-sm bg-primary px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-3 lg:px-4 lg:py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer"
                     >
                       -
                     </button>
@@ -81,7 +83,7 @@ function CartUI() {
                   <TableCell className="font-medium  text-center">
                     {item.product.price}
                   </TableCell>
-                  <TableCell className="font-medium  text-center">
+                  <TableCell className="font-medium  text-center hidden md:table-cell">
                     {(item.quantity * item.product.price).toFixed(2)}
                   </TableCell>
                   <TableCell className="font-medium  text-center">
@@ -97,7 +99,7 @@ function CartUI() {
             </TableBody>
           </Table>
         </div>
-        <div className="col-span-1 border rounded-2xl">
+        <div className="col-span-2 md:col-span-1 border rounded-2xl">
           <h1 className="text-lg font-bold my-1 text-center">Order Summary</h1>
           <div className="col-span-1 border flex flex-col gap-2">
             <div className="flex justify-between p-10">

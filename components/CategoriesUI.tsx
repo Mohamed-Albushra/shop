@@ -7,7 +7,7 @@ const manolo = localFont({ src: "../assets/manolo-mono.ttf" });
 export default function CategoriesUI(props: CategoriesUIProps) {
   return (
     <div className="container mx-auto p-4">
-      <ul className="grid grid-cols-3 auto-rows-[150px] gap-5">
+      <ul className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 auto-rows-[150px] gap-5">
         {props.categories.map((category, index) => {
           return (
             <li
