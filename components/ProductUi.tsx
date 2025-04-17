@@ -23,11 +23,11 @@ function ProductUi({ product }: ProductUiProps) {
     setIsClientSide(true);
   }, []);
 
- 
+ // Function to handle image change
   const changeImage = (image: string) => {
     setPhoto(image);
   }
-
+// Function to handle products by same brand scroll
   const relatedByBrand = useCallback(
     async (product: Product) => {
       const products = await getProductsByBrand(product.brand);
@@ -36,7 +36,7 @@ function ProductUi({ product }: ProductUiProps) {
     },
     []
   );
-
+// Function to handle products by same tag
   const relatedByTages = useCallback(
     async (product: Product, tagsProducts: Product[]) => {
       await Promise.all(
@@ -50,7 +50,7 @@ function ProductUi({ product }: ProductUiProps) {
     []
   );
 
-
+// Function to get visible items
   const ITEMS_PER_VIEW = 4;
   const getVisibleItems = (items: Product[], startIndex: number) => items.slice(startIndex, startIndex + ITEMS_PER_VIEW);
 
@@ -58,7 +58,7 @@ function ProductUi({ product }: ProductUiProps) {
     relatedByBrand(product);
     relatedByTages(product, []);
   }, [product, relatedByBrand, relatedByTages]);
-
+// Function to handle add to cart
   const { addToCart } = useCart();
   const addProductToCart = (product: Product) => {
     addToCart(product);

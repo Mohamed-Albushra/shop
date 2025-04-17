@@ -8,7 +8,7 @@ import localFont from 'next/font/local';
 const manolo = localFont({ src: '../assets/manolo-mono.ttf' })
 export default function Brandsbar() {
   const [myBrands, setMyBrands] = useState<string[]>([]);
-
+// get all products and extract unique brands
   useEffect(() => {
     getAllProducts().then(products => {
       const brands = products.map(product => product.brand);

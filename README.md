@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SHOPSMART 🛒
 
-## Getting Started
+**SHOPSMART** is a modern, responsive shopping website demo built with Next.js and Tailwind CSS. It features a clean UI, intuitive navigation, and essential e-commerce functionality — perfect as a foundation for a full-featured online store.
 
-First, run the development server:
+## 🚀 Demo
+
+_The live demo will be available soon. Stay tuned!_
+
+## 📦 Features
+
+- 🗂️ Product categories and listings  
+- 📄 Individual product detail pages  
+- 🔍 Filtering and sorting options  
+- 🛍️ Add to cart functionality  
+- 📱 Fully responsive layout  
+- ⚡ Fast performance with a smooth UI  
+
+## 🛠️ Tech Stack
+
+- [Next.js](https://nextjs.org/)  
+- [React](https://reactjs.org/)  
+- [Tailwind CSS](https://tailwindcss.com/)  
+- [TypeScript](https://www.typescriptlang.org/)  
+- [shadcn/ui](https://ui.shadcn.com/)  
+- [Lucide Icons](https://lucide.dev/)  
+- [Aceternity UI](https://ui.aceternity.com/)  
+- [Vercel](https://vercel.com/) _(planned for deployment)_  
+
+## 📁 Getting Started
+
+### Installation
+
+Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/your-username/shopsmart.git
+cd shopsmart
+npm install
+```
+
+### Running the App
+
+To start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open your browser at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📚 Data Source
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Currently powered by the [dummyjson API](https://dummyjson.com/docs/products).
+Future plans include switching to a custom backend with real product data and authentication.
 
-## Learn More
+## 🧠 Planned Features
 
-To learn more about Next.js, take a look at the following resources:
+-Backend integration.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-User authentication.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+-Admin/product management dashboard.
 
-## Deploy on Vercel
+-Real data from database or CMS.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👤 Author
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MOHAMED ALBUSHRA
+[GitHub](https://github.com/Mohamed-Albushra)
+[LinkedIn](www.linkedin.com/in/mohamed-albushra-97a382190)
