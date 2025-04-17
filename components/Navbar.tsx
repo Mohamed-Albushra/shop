@@ -4,7 +4,7 @@ import { ShoppingCart, Menu } from "lucide-react";
 import Link from "next/link";
 import NavbarSearch from "@/components/NavbarSearch";
 import { useCart } from "./cartProvider";
-
+import { Suspense } from "react";
 export default function Navbar() {
   const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,7 +35,9 @@ export default function Navbar() {
           </ul>
         </div>
         <div>
-          <NavbarSearch />
+        <Suspense fallback={<div>Loading search...</div>}>
+        <NavbarSearch />
+      </Suspense>
         </div>
         <div>
           <Link href="/cart" className="relative flex items-center">
@@ -60,7 +62,9 @@ export default function Navbar() {
           </div>
 
           <div>
-            <NavbarSearch />
+          <Suspense fallback={<div>Loading search...</div>}>
+        <NavbarSearch />
+      </Suspense>
           </div>
           <div>
             <Link href="/cart" className="relative flex items-center">
