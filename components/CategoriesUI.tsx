@@ -18,7 +18,7 @@ export default function CategoriesUI(props: CategoriesUIProps) {
                 href={`/products/category/${category}`}
                 className="flex flex-col items-center justify-center bg-cover bg-center h-full w-full transition-transform hover:scale-120 mask-x-from-70% mask-x-to-90% mask-y-from-70% mask-y-to-90%"
                 style={{
-                  backgroundImage: `url(/${category}.jpg)`,
+                  backgroundImage: `url(/images/${category}.jpg)`,
                 }}
               >
                 <h2

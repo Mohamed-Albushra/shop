@@ -94,7 +94,7 @@ function CategoryUI(props: CategoryUIProps) {
   return (
     <div>
       <div
-        style={{ backgroundImage: `url(/${category}.jpg)` }}
+        style={{ backgroundImage: `url(/images/${category}.jpg)` }}
         className="fixed mask-x-from-70% mask-x-to-95% mask-y-from-70% mask-y-to-95% flex flex-col items-center justify-center h-screen bg-cover bg-center  top-0 left-0 w-full z-[-10]"
       ></div>
       <div className="relative z-10">
