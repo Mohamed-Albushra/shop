@@ -28,7 +28,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const storedCart = typeof localStorage !== 'undefined' ? localStorage.getItem("cart") : null;
     return storedCart ? JSON.parse(storedCart) : [];
   });
-
+// geting the cart from local storage
   useEffect(() => {
     const cart = localStorage.getItem("cart");
     if (cart) {
@@ -36,7 +36,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setCartItems(cartProducts);
     }
   }, []);
-
+// adding product to cart
   const addToCart = (product: Product) => {
     const cart = localStorage.getItem("cart");
     let cartProducts;
@@ -61,19 +61,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("cart", JSON.stringify(cartProducts));
     setCartItems(cartProducts);
   };
-
+// removing product from cart
   const removeFromCart = (product: Product) => {
     const newCartItems = cartItems.filter((item) => item.product.id !== product.id);
     setCartItems(newCartItems);
     localStorage.setItem("cart", JSON.stringify(newCartItems));
   };
-
+// clearing cart
   const clearCart = () => {
     setCartItems([]);
     localStorage.removeItem("cart");
     setCartCount(0);
   };
-
+// adding and removing quantity
   const moreQuantity = (productId: number) => {
     const updatedCartItems = cartItems.map((item: CartItem) =>
       item.product.id === productId
@@ -93,13 +93,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
   };
-
+// calculating total
   const cartTotal = cartItems.reduce(
     (total, item) => total + (item.product?.price || 0) * item.quantity,
     0
   );
   const [cartCount, setCartCount] = useState(0);
-
+// updating cart count
 useEffect(() => {
   setCartCount(cartItems.reduce((total, item) => total + item.quantity, 0));
 }, [cartItems]);
