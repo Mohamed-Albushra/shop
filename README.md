@@ -4,7 +4,7 @@
 
 ## 🚀 Demo
 
-_The live demo will be available soon. Stay tuned!_
+[SHOPSMART](https://shopsmart-ebon.vercel.app/)
 
 ## 📦 Features
 
