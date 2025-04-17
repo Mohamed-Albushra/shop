@@ -24,7 +24,7 @@
 - [shadcn/ui](https://ui.shadcn.com/)  
 - [Lucide Icons](https://lucide.dev/)  
 - [Aceternity UI](https://ui.aceternity.com/)  
-- [Vercel](https://vercel.com/) _(planned for deployment)_  
+- [Vercel](https://vercel.com/)   
 
 ## 📁 Getting Started
 
