@@ -6,6 +6,16 @@
 
 [SHOPSMART](https://shopsmart-ebon.vercel.app/)
 
+
+## 📦 Features
+
+- 🗂️ Product categories and listings  
+- 📄 Individual product detail pages  
+- 🔍 Filtering and sorting options  
+- 🛍️ Add to cart functionality  
+- 📱 Fully responsive layout  
+- ⚡ Fast performance with a smooth UI  
+
 ## 📷 Screenshots
 
 ![landing page](https://github.com/user-attachments/assets/1e5f292d-cd85-4ad2-85a1-0716047abe68)
@@ -18,17 +28,6 @@
 ![responsive2](https://github.com/user-attachments/assets/3c70e8b1-f796-432a-83b3-0a535dcf3260)
 ![responsive3](https://github.com/user-attachments/assets/181ac27e-519e-41ee-a991-6e030acd8564)
 ![responsive4](https://github.com/user-attachments/assets/8e300888-57b4-48f3-9b74-ae700fab2dce)
-
-
-## 📦 Features
-
-
-- 🗂️ Product categories and listings  
-- 📄 Individual product detail pages  
-- 🔍 Filtering and sorting options  
-- 🛍️ Add to cart functionality  
-- 📱 Fully responsive layout  
-- ⚡ Fast performance with a smooth UI  
 
 ## 🛠️ Tech Stack
 
