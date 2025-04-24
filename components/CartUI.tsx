@@ -30,7 +30,7 @@ function CartUI() {
       <h1 className={`${manolo.className} flex justify-center items-center text-3xl text-black pb-3 backdrop-opacity-10 px-4  rounded`}>Your Cart</h1>
       <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-10 md:gap-5">
         <div className="col-span-2 border rounded-2xl mx-1 ">
-          <Table>
+          <Table suppressHydrationWarning>
             <TableHeader>
               <TableRow className="text-lg font-bold">
                 <TableHead className="w-[100px] text-center">Image</TableHead>

@@ -93,7 +93,7 @@ export default function NavbarSearch() {
         <Search className="h-4 w-4" />
       </button>
       {isSearchFormOpen && (
-        <div className="absolute top-full right-0 w-full bg-white shadow-md p-4">
+        <div className={`${isSearchFormOpen ? 'fixed top-10 left-0 w-full px-3 bg-white bg-opacity-50 z-40' : 'hidden'}`}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
