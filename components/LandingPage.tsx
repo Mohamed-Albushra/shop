@@ -4,6 +4,7 @@ import Link from "next/link";
 import Brandsbar from "@/components/Brandsbar";
 import Trending from "./Trending";
 import BackgroundVideo from "@/components/BackgroundVideo";
+import Testimonials from "./Testimonials";
 
 // const brogsway = localFont({ src: '../assets/Brogsway Demo.otf' })
 const Britney = localFont({ src: "../assets/Britney-Ultra.woff2" });
@@ -67,6 +68,9 @@ export default function LandingPage() {
             </div>
             <div>
               <Trending />
+            </div>
+            <div>
+              <Testimonials />
             </div>
           </div>
         </div>
