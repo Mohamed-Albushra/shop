@@ -169,4 +169,11 @@
     transform: translateY(-50%);
   }
 }
+
+.text-bordered {
+  color: white;
+  -webkit-text-stroke: 1px black;
+  text-stroke: 1px black; /* For extra support */
+}
+
  
