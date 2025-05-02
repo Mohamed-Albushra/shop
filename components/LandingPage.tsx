@@ -69,7 +69,7 @@ export default function LandingPage() {
             <div>
               <Trending />
             </div>
-            <div>
+            <div className="bg-zinc-200 py-25">
               <Testimonials />
             </div>
           </div>
