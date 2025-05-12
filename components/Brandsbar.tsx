@@ -15,6 +15,7 @@ export default function Brandsbar() {
       const filteredBrands = brands.filter(brand => typeof brand === 'string');
       const uniqueBrands = [...new Set(filteredBrands)];
       setMyBrands(uniqueBrands);
+      console.log("Unique Brands:", uniqueBrands.length);
     });
   }, []);
   return (

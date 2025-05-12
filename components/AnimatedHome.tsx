@@ -1,13 +1,13 @@
 import React from 'react'
-import { BackgroundGradientAnimation } from "./ui/background-gradient-animation";
+// import { BackgroundGradientAnimation } from "./ui/background-gradient-animation";
 import localFont from 'next/font/local';
 import { Suspense } from 'react'
 const manolo = localFont({ src: '../assets/manolo-mono.ttf' })
 function AnimatedHome() {
   return (
     <Suspense>
-    <BackgroundGradientAnimation>
-      <div className="absolute z-50 inset-0 flex items-center justify-center text-black font-bold  pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl bg-gradient-to-t from-90% to-white/80">
+    {/* <BackgroundGradientAnimation> */}
+      <div className="mt-20 absolute z-50 inset-0 flex items-center justify-center text-black font-bold  pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl bg-gradient-to-t from-90% to-white/80">
       <div className="max-w-4xl mx-auto pt-40 md:pt-20  px-5">
       <h1 className={`${manolo.className} flex justify-center items-center text-5xl text-black pb-3 backdrop-opacity-10 px-4  rounded`}>About Us</h1>
 
@@ -46,7 +46,7 @@ function AnimatedHome() {
         </p>
       </div>
       </div>
-    </BackgroundGradientAnimation>
+      {/* </BackgroundGradientAnimation>*/}
     </Suspense>
   )
 }
